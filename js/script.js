@@ -221,7 +221,7 @@ $(function () {
 			lastnames = nameList[race]['subraces'][npc.subrace]['lastnames'];
 		}
 		else {
-			
+
 			firstnames = nameList[race][gender];
 			lastnames = nameList[race]['lastnames'];
 		}
