@@ -22,6 +22,12 @@ $(function () {
 		language: [],
 		wealth: '',
 		treasure: 0,
+		str: 0,
+		dex: 0,
+		con: 0,
+		int: 0,
+		wis: 0,
+		cha: 0,
 		settings: {
 			genderRatio: 8
 		}
@@ -223,10 +229,29 @@ $(function () {
 		return hpRoll;
 	};
 
+	var setCaracteristics = function() {
+		// TODO : keep 3 best rool
+		var caractRoll = roll(1, 6, 0) + roll(1, 6, 0) + roll(1, 6, 0);
+
+		var index = 0,
+			length = 4;
+		for(index; index < length; index++) {
+
+		}
+
+		return caractRoll;
+	};
+
 	npc.gender = setGender();
 	npc.race = setRace();
 	npc.name = setName(npc.gender, npc.race);
 	npc.hitPoints = setHP;
+	npc.str = setCaracteristics();
+	npc.dex = setCaracteristics();
+	npc.con = setCaracteristics();
+	npc.int = setCaracteristics();
+	npc.wis = setCaracteristics();
+	npc.cha = setCaracteristics();
 
 	/**
 	 * Fill the html block
@@ -251,6 +276,14 @@ $(function () {
 
 		// Set hit points
 		$('.hitpoints').text(npc.hitPoints);
+
+		// Set caracteristics
+		$('.str').text(npc.str);
+		$('.dex').text(npc.dex);
+		$('.con').text(npc.con);
+		$('.int').text(npc.int);
+		$('.wis').text(npc.wis);
+		$('.cha').text(npc.cha);
 	};
 
 	fillBlock();
