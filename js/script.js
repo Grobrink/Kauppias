@@ -15,7 +15,7 @@ $(function () {
 		gender: '',
 		name: '',
 		level: 0,
-		hitPoint: 0,
+		hitPoints: 0,
 		alignement: '',
 		race: '',
 		subrace: '',
@@ -92,7 +92,7 @@ $(function () {
 			female: ['Adrie', 'Althaea', 'Anastrianna', 'Andraste', 'Antinua', 'Bethrynna', 'Birel', 'Caelynn', 'Drusilia', 'Enna', 'Felosial', 'Ielenia', 'Jelenneth', 'Keyleth', 'Leshanna', 'Lia', 'Meriele', 'Mialee', 'Naivara', 'Quelenna', 'Quillathe', 'Sariel', 'Shanairra', 'Shava', 'Silaqui', 'Theirastra', 'Thia', 'Vadania', 'Valanthe', 'Xanaphia'],
 			lastnames: ['Amakiir (Gemflower)', 'Amastacia (Starflower)', 'Galanodel (Moonwhisper)', 'Holimion (Diamonddew)', 'Ilphelkiir (Gemblossom)', 'Liadon (Silverfrond)', 'Meliamne (Oakenheel)', 'Naïlo (Nightbreeze)', 'Siannodel (Moonbrook)', 'Xiloscient (Goldpetal)']
 		},
-	}
+	};
 
 	/**
 	 * Set NPC gender
@@ -215,32 +215,43 @@ $(function () {
 				lastnameRoll = roll(0, lastnamesLength, 0);
 
 		return firstnames[firstnameRoll] + ' ' + lastnames[lastnameRoll];
-	}
+	};
+
+	var setHP = function() {
+		var hpRoll = roll(1, 8, 0) + roll(1, 8, 0);
+
+		return hpRoll;
+	};
 
 	npc.gender = setGender();
 	npc.race = setRace();
 	npc.name = setName(npc.gender, npc.race);
+	npc.hitPoints = setHP;
 
 	/**
 	 * Fill the html block
 	 */
 	var fillBlock = function() {
 
+		// Set name
 		$('.name').text(npc.name);
 
-		if ($('.description').val() != '') {
-
-			$('.description').text(npc.name);
-		}
-
+		// Set description
 		var $description = $('.description'),
 			subraceString = '';
+
+		if ($description.val() != '') {
+			$description.text(npc.name);
+		}
 
 		if (npc.subrace != '') {
 			subraceString = ', ' + npc.subrace;
 		}
 		$description.text(npc.race + ' ' + npc.gender + subraceString);
-	}
+
+		// Set hit points
+		$('.hitpoints').text(npc.hitPoints);
+	};
 
 	fillBlock();
 
