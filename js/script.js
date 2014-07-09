@@ -233,8 +233,13 @@ $(function () {
 			$('.description').text(npc.name);
 		}
 
-		var $description = $('.description');
-		$description.text(npc.race + ', ' + npc.gender + ', ' + npc.subrace);
+		var $description = $('.description'),
+			subraceString = '';
+
+		if (npc.subrace != '') {
+			subraceString = ', ' + npc.subrace;
+		}
+		$description.text(npc.race + ' ' + npc.gender + subraceString);
 	}
 
 	fillBlock();
