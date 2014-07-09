@@ -160,19 +160,17 @@ $(function () {
 			break;
 
 			case 'Dwarf':
-				console.log('2');
+				console.log('It\'s a Dwarf');
 			break;
 
 			case 'Halfling':
-				console.log('3');
+				console.log('It\'s a Halfling');
 			break;
 
 			case 'Elf':
-				console.log('4');
+				console.log('It\'s an Elf');
 			break;
 		}
-
-		console.log(subrace);
 
 		return subrace;
 	};
@@ -219,15 +217,14 @@ $(function () {
 
 			var subrace = npc.subrace;
 
-			console.log(nameList[race]['subraces']['Mulan']['male']);
-			console.log(nameList[race]['subraces']['Mulan']['male']);
-
 			firstnames = nameList[race]['subraces'][npc.subrace][gender];
 			lastnames = nameList[race]['subraces'][npc.subrace]['lastnames'];
 		}
-
+		else {
+			
 			firstnames = nameList[race][gender];
 			lastnames = nameList[race]['lastnames'];
+		}
 
 		var	firstnamesLength = firstnames.length,
 				lastnamesLength = lastnames.length,
