@@ -220,7 +220,24 @@ $(function () {
 	npc.gender = setGender();
 	npc.race = setRace();
 	npc.name = setName(npc.gender, npc.race);
-	$('.name').text(npc.name);
+
+	/**
+	 * Fill the html block
+	 */
+	var fillBlock = function() {
+
+		$('.name').text(npc.name);
+
+		if ($('.description').val() != '') {
+
+			$('.description').text(npc.name);
+		}
+
+		var $description = $('.description');
+		$description.text(npc.race + ', ' + npc.gender + ', ' + npc.subrace);
+	}
+
+	fillBlock();
 
 	console.log(npc);
 });
