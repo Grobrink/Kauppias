@@ -223,35 +223,64 @@ $(function () {
 		return firstnames[firstnameRoll] + ' ' + lastnames[lastnameRoll];
 	};
 
+	/**
+	 * Set NPC hit points
+	 * @return {integer} return hit points
+	 */
 	var setHP = function() {
 		var hpRoll = roll(1, 8, 0) + roll(1, 8, 0);
 
 		return hpRoll;
 	};
 
-	var setCaracteristics = function() {
-		// TODO : keep 3 best rool
-		var caractRoll = roll(1, 6, 0) + roll(1, 6, 0) + roll(1, 6, 0);
+	/**
+	 * Set all attribute scores
+	 */
+	var setAttributes = function() {
 
 		var index = 0,
-			length = 4;
+				length = 4,
+				lowerRoll = 24, // Set a bigger value than possible by rolls
+				currentRoll,
+				totalRoll = 0;
 		for(index; index < length; index++) {
+			currentRoll = roll(1, 6, 0);
+			
+			totalRoll += currentRoll;
 
+			if (currentRoll < lowerRoll) {
+				lowerRoll = currentRoll;
+			}
 		}
 
-		return caractRoll;
+		totalRoll -= lowerRoll;
+
+		return totalRoll;
 	};
+
+	/**
+	 * Get attribute modifier
+	 * @param  {int} An attribute value
+	 * @return {string}       return the modifier with her sign
+	 */
+	var getAttributeModifier = function(value) {
+		var value = (value - 10) / 2;
+
+		value = (value < 0) ? Math.floor((value % 2) ? value : value - 1) : '+' + Math.floor(value);
+
+		return String(value);
+	}
 
 	npc.gender = setGender();
 	npc.race = setRace();
 	npc.name = setName(npc.gender, npc.race);
 	npc.hitPoints = setHP;
-	npc.str = setCaracteristics();
-	npc.dex = setCaracteristics();
-	npc.con = setCaracteristics();
-	npc.int = setCaracteristics();
-	npc.wis = setCaracteristics();
-	npc.cha = setCaracteristics();
+	npc.str = setAttributes();
+	npc.dex = setAttributes();
+	npc.con = setAttributes();
+	npc.int = setAttributes();
+	npc.wis = setAttributes();
+	npc.cha = setAttributes();
 
 	/**
 	 * Fill the html block
@@ -284,6 +313,14 @@ $(function () {
 		$('.int').text(npc.int);
 		$('.wis').text(npc.wis);
 		$('.cha').text(npc.cha);
+
+		// Set caracteristics modifier
+		$('.str-modifier').text(getAttributeModifier(npc.str));
+		$('.dex-modifier').text(getAttributeModifier(npc.dex));
+		$('.con-modifier').text(getAttributeModifier(npc.con));
+		$('.int-modifier').text(getAttributeModifier(npc.int));
+		$('.wis-modifier').text(getAttributeModifier(npc.wis));
+		$('.cha-modifier').text(getAttributeModifier(npc.cha));
 	};
 
 	fillBlock();
