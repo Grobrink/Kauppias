@@ -131,32 +131,32 @@ $(function () {
 
 		switch(race) {
 			case 'Human':
-				if (subraceRoll <= 20) {
-					subrace = npc.subrace = 'Calishite';
-				}
-				else if (subraceRoll <= 30){
+				if (subraceRoll <= 65) {
 					subrace = npc.subrace = 'Chondathan';
 				}
-				else if (subraceRoll <= 40){
-					subrace = npc.subrace = 'Damaran';
-				}
-				else if (subraceRoll <= 50){
-					subrace = npc.subrace = 'Illuskan';
-				}
-				else if (subraceRoll <= 60){
-					subrace = npc.subrace = 'Mulan';
-				}
-				else if (subraceRoll <= 70){
-					subrace = npc.subrace = 'Rashemi';
-				}
-				else if (subraceRoll <= 80){
-					subrace = npc.subrace = 'Shou';
-				}
-				else if (subraceRoll <= 90){
+				else if (subraceRoll <= 75){
 					subrace = npc.subrace = 'Tethyrian';
 				}
-				else if (subraceRoll <= 100){
+				else if (subraceRoll <= 85){
+					subrace = npc.subrace = 'Calishite';
+				}
+				else if (subraceRoll <= 90){
+					subrace = npc.subrace = 'Illuskan';
+				}
+				else if (subraceRoll <= 96){
 					subrace = npc.subrace = 'Turami';
+				}
+				else if (subraceRoll <= 97){
+					subrace = npc.subrace = 'Rashemi';
+				}
+				else if (subraceRoll <= 98){
+					subrace = npc.subrace = 'Shou';
+				}
+				else if (subraceRoll <= 99){
+					subrace = npc.subrace = 'Damaran';
+				}
+				else if (subraceRoll <= 100){
+					subrace = npc.subrace = 'Mulan';
 				}
 			break;
 		}
