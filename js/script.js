@@ -271,13 +271,56 @@ $(function () {
 		return String(value);
 	}
 
-
+	/**
+	 * Set the passive perception value
+	 * @return {int} Return the passive perception value
+	 */
 	var setPerception = function() {
 		var value = 0;
 
 			value = parseInt(getAttributeModifier(npc.wis)) + 10;
 
 		return	value;
+	}
+
+	/**
+	 * [setLanguages description]
+	 */
+	var setLanguages = function() {
+		var languages = 'Common';
+
+		var index = 0,
+				length = parseInt(getAttributeModifier(npc.int)),
+				languageRoll,
+				result = '';
+		for(index; index < 10; index++) {
+			languageRoll = roll(0, 100, 0);
+
+			if (languageRoll <= 35 && languages.indexOf('Halfling') == -1) {
+					result = 'Halfling';
+			}
+			else if (languageRoll <= 60 && languages.indexOf('Dwarvish') == -1) {
+					result = 'Dwarvish';
+			}
+			else if (languageRoll <= 75 && languages.indexOf('Elvish') == -1) {
+					result = 'Elvish';
+			}
+			else if (languageRoll <= 85 && languages.indexOf('Gnomish') == -1) {
+					result = 'Gnomish';
+			}
+			else if (languageRoll <= 90 && languages.indexOf('Goblin') == -1) {
+					result = 'Goblin';
+			}
+			else if (languageRoll <= 100 && languages.indexOf('Orc') == -1) {
+					result = 'Orc';
+			}
+
+			if (result != '') {
+				languages += ', ' + result;
+			}
+		}
+
+		return languages;
 	}
 
 	npc.gender = setGender();
@@ -331,8 +374,11 @@ $(function () {
 		$('.wis-modifier').text(getAttributeModifier(npc.wis));
 		$('.cha-modifier').text(getAttributeModifier(npc.cha));
 
-		// Set pasive perception
+		// Set passive perception
 		$('.perception').text(setPerception());
+
+		// Set languages
+		$('.languages').text(setLanguages());
 	};
 
 	fillBlock();
