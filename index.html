@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Kauppias : Another merchant NPC generator for D&D</title>
+		<meta name="author" content="Pierre Lefèvre">
+
+		<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	</head>
+
+	<body>
+
+		<!-- Markup from http://jsfiddle.net/basmith7/Z2sQK/
+				 Use as a template
+		 -->
+		<div class="template stat-block">
+			<div class="name">
+			</div>
+
+			<div class="description">
+			</div>
+
+			<div class="divider"></div>
+
+			<div class="red">
+				<div>
+					<span class="bold red">Armor Class</span> <span>10</span>
+				</div>
+
+				<div>
+					<span class="bold red">Hit Points <span class="hitpoints"></span></span> <span>(2d8+2)</span>
+				</div>
+
+				<div>
+					<span class="bold red">Speed</span> <span>30 ft.</span>
+				</div>
+			</div>
+
+			<div class="divider"></div>
+
+			<table>
+				<tr>
+					<th>STR</th>
+					<th>DEX</th>
+					<th>CON</th>
+					<th>INT</th>
+					<th>WIS</th>
+					<th>CHA</th>
+				</tr>
+
+				<tr>
+					<td><span class="stat str"></span> (<span class="str-modifier"></span>)</td>
+					<td><span class="stat dex"></span> (<span class="dex-modifier"></span>)</td>
+					<td><span class="stat con"></span> (<span class="con-modifier"></span>)</td>
+					<td><span class="stat int"></span> (<span class="int-modifier"></span>)</td>
+					<td><span class="stat wis"></span> (<span class="wis-modifier"></span>)</td>
+					<td><span class="stat cha"></span> (<span class="cha-modifier"></span>)</td>
+				</tr>
+			</table>
+
+			<div class="divider"></div>
+
+			<div>
+				<span class="bold">Senses</span>
+				<span>darkvision 60ft., passive Perception 8</span>
+			</div>
+
+			<div>
+				<span class="bold">Languages</span>
+				<span>Common, Giant</span>
+			</div>
+
+			<div>
+				<span class="bold">Challenge</span>
+				<span>2 (450 XP)</span>
+			</div>
+
+			<div class="divider"></div>
+
+			<div class="actions red">
+				Actions
+			</div>
+
+			<div class="attack">
+				<span class="attackname">Greatclub.</span>
+				<span class="description">Melee Weapon Attack:</span>
+				<span>+6 to hit, reach 5 ft., one target.</span>
+				<span class="description">Hit:</span><span>13 (2d8+4) bludgeoning damage.</span>
+			</div>
+
+			<div class="attack">
+				<span class="attackname">Javelin.</span>
+				<span class="description">Melee or Ranged Weapon Attack:</span>
+				<span>+6 to hit, reach 5 ft. or 30ft./120, one target.</span>
+				<span class="description">Hit:</span><span>11 (2d6+4) piercing damage.</span>
+			</div>
+		</div>
+
+		<!-- SCRIPTS -->
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="/js/script.js"></script>
+	</body>
+</html>
