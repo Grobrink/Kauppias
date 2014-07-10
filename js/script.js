@@ -271,6 +271,15 @@ $(function () {
 		return String(value);
 	}
 
+
+	var setPerception = function() {
+		var value = 0;
+
+			value = parseInt(getAttributeModifier(npc.wis)) + 10;
+
+		return	value;
+	}
+
 	npc.gender = setGender();
 	npc.race = setRace();
 	npc.name = setName(npc.gender, npc.race);
@@ -321,6 +330,9 @@ $(function () {
 		$('.int-modifier').text(getAttributeModifier(npc.int));
 		$('.wis-modifier').text(getAttributeModifier(npc.wis));
 		$('.cha-modifier').text(getAttributeModifier(npc.cha));
+
+		// Set pasive perception
+		$('.perception').text(setPerception());
 	};
 
 	fillBlock();
