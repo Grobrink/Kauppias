@@ -287,13 +287,14 @@ $(function () {
 	 * [setLanguages description]
 	 */
 	var setLanguages = function() {
+
 		var languages = 'Common';
 
 		var index = 0,
 				length = parseInt(getAttributeModifier(npc.int)),
 				languageRoll,
 				result = '';
-		for(index; index < 10; index++) {
+		for(index; index < length; index++) {
 			languageRoll = roll(0, 100, 0);
 
 			if (languageRoll <= 35 && languages.indexOf('Halfling') == -1) {
