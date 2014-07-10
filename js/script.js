@@ -284,7 +284,8 @@ $(function () {
 	}
 
 	/**
-	 * [setLanguages description]
+	 * Set NPC knew languages
+	 * @return {string} return a string containg all knew languages
 	 */
 	var setLanguages = function() {
 
@@ -296,6 +297,7 @@ $(function () {
 				result = '';
 		for(index; index < length; index++) {
 			languageRoll = roll(0, 100, 0);
+			result = '';
 
 			if (languageRoll <= 35 && languages.indexOf('Halfling') == -1) {
 					result = 'Halfling';
