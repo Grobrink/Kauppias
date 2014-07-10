@@ -16,18 +16,20 @@ $(function () {
 		name: '',
 		level: 0,
 		hitPoints: 0,
-		alignement: '',
+		alignment: '',
 		race: '',
 		subrace: '',
-		language: [],
+		languages: [],
 		wealth: '',
 		treasure: 0,
-		str: 0,
-		dex: 0,
-		con: 0,
-		int: 0,
-		wis: 0,
-		cha: 0,
+		attributes: {
+			str: 0,
+			dex: 0,
+			con: 0,
+			int: 0,
+			wis: 0,
+			cha: 0
+		},
 		settings: {
 			genderRatio: 8
 		}
@@ -100,6 +102,13 @@ $(function () {
 		},
 	};
 
+	var alignment = {
+		ge: ['Good', 'Neutral', 'Evil'],
+		lc: ['Lawful', 'Neutral', 'Chaotic']
+	};
+
+
+
 	/**
 	 * Set NPC gender
 	 * 80% chance to generate a man
@@ -166,7 +175,6 @@ $(function () {
 
 	/**
 	 * Set NPC race
-	 * 80% chance to generate a man
 	 * @return {string} The Merchant npc race
 	 */
 	var setRace = function() {
@@ -200,7 +208,7 @@ $(function () {
 	var setName = function(gender, race) {
 
 		var firstnames,
-				lastnames;
+			lastnames;
 
 		if (typeof nameList[race]['subraces'] != 'undefined') {
 
@@ -216,9 +224,9 @@ $(function () {
 		}
 
 		var	firstnamesLength = firstnames.length,
-				lastnamesLength = lastnames.length,
-				firstnameRoll = roll(0, firstnamesLength, 0),
-				lastnameRoll = roll(0, lastnamesLength, 0);
+			lastnamesLength = lastnames.length,
+			firstnameRoll = roll(0, firstnamesLength, 0),
+			lastnameRoll = roll(0, lastnamesLength, 0);
 
 		return firstnames[firstnameRoll] + ' ' + lastnames[lastnameRoll];
 	};
@@ -239,13 +247,13 @@ $(function () {
 	var setAttributes = function() {
 
 		var index = 0,
-				length = 4,
-				lowerRoll = 24, // Set a bigger value than possible by rolls
-				currentRoll,
-				totalRoll = 0;
+			length = 4,
+			lowerRoll = 24, // Set a bigger value than possible by rolls
+			currentRoll,
+			totalRoll = 0;
 		for(index; index < length; index++) {
 			currentRoll = roll(1, 6, 0);
-			
+
 			totalRoll += currentRoll;
 
 			if (currentRoll < lowerRoll) {
@@ -269,7 +277,7 @@ $(function () {
 		value = (value < 0) ? Math.floor((value % 2) ? value : value - 1) : '+' + Math.floor(value);
 
 		return String(value);
-	}
+	};
 
 	/**
 	 * Set the passive perception value
@@ -278,10 +286,10 @@ $(function () {
 	var setPerception = function() {
 		var value = 0;
 
-			value = parseInt(getAttributeModifier(npc.wis)) + 10;
+			value = parseInt(getAttributeModifier(npc.attributes.wis)) + 10;
 
 		return	value;
-	}
+	};
 
 	/**
 	 * Set NPC knew languages
@@ -292,7 +300,7 @@ $(function () {
 		var languages = 'Common';
 
 		var index = 0,
-				length = parseInt(getAttributeModifier(npc.int)),
+				length = parseInt(getAttributeModifier(npc.attributes.int)),
 				languageRoll,
 				result = '';
 		for(index; index < length; index++) {
@@ -319,23 +327,68 @@ $(function () {
 			}
 
 			if (result != '') {
+				npc.languages.push(result)
 				languages += ', ' + result;
 			}
 		}
 
 		return languages;
-	}
+	};
+
+	var setAlignment = function() {
+		var align = '',
+			choosen,
+			alignRoll = roll(0, 100, 0);
+
+		if (alignRoll <= 50) {
+			choosen = 0;
+		}
+		else if (alignRoll <= 85) {
+			choosen = 1;
+		}
+		else {
+			choosen = 2;
+		}
+
+		align = alignment['lc'][choosen];
+
+
+		alignRoll = roll(0, 100, 0);
+
+		if (alignRoll <= 50) {
+			choosen = 0;
+		}
+		else if (alignRoll <= 87) {
+			if (choosen != 1) {
+				choosen = 1;
+			}
+			else {
+				choosen = -1;
+			}
+		}
+		else {
+			choosen = 2;
+		}
+
+		if (choosen != -1) {
+			align += ' ' + alignment['ge'][choosen];
+		}
+
+		npc.alignment = align;
+
+		return align;
+	};
 
 	npc.gender = setGender();
 	npc.race = setRace();
 	npc.name = setName(npc.gender, npc.race);
 	npc.hitPoints = setHP;
-	npc.str = setAttributes();
-	npc.dex = setAttributes();
-	npc.con = setAttributes();
-	npc.int = setAttributes();
-	npc.wis = setAttributes();
-	npc.cha = setAttributes();
+	npc.attributes.str = setAttributes();
+	npc.attributes.dex = setAttributes();
+	npc.attributes.con = setAttributes();
+	npc.attributes.int = setAttributes();
+	npc.attributes.wis = setAttributes();
+	npc.attributes.cha = setAttributes();
 
 	/**
 	 * Fill the html block
@@ -362,26 +415,29 @@ $(function () {
 		$('.hitpoints').text(npc.hitPoints);
 
 		// Set caracteristics
-		$('.str').text(npc.str);
-		$('.dex').text(npc.dex);
-		$('.con').text(npc.con);
-		$('.int').text(npc.int);
-		$('.wis').text(npc.wis);
-		$('.cha').text(npc.cha);
+		$('.str').text(npc.attributes.str);
+		$('.dex').text(npc.attributes.dex);
+		$('.con').text(npc.attributes.con);
+		$('.int').text(npc.attributes.int);
+		$('.wis').text(npc.attributes.wis);
+		$('.cha').text(npc.attributes.cha);
 
 		// Set caracteristics modifier
-		$('.str-modifier').text(getAttributeModifier(npc.str));
-		$('.dex-modifier').text(getAttributeModifier(npc.dex));
-		$('.con-modifier').text(getAttributeModifier(npc.con));
-		$('.int-modifier').text(getAttributeModifier(npc.int));
-		$('.wis-modifier').text(getAttributeModifier(npc.wis));
-		$('.cha-modifier').text(getAttributeModifier(npc.cha));
+		$('.str-modifier').text(getAttributeModifier(npc.attributes.str));
+		$('.dex-modifier').text(getAttributeModifier(npc.attributes.dex));
+		$('.con-modifier').text(getAttributeModifier(npc.attributes.con));
+		$('.int-modifier').text(getAttributeModifier(npc.attributes.int));
+		$('.wis-modifier').text(getAttributeModifier(npc.attributes.wis));
+		$('.cha-modifier').text(getAttributeModifier(npc.attributes.cha));
 
 		// Set passive perception
 		$('.perception').text(setPerception());
 
 		// Set languages
 		$('.languages').text(setLanguages());
+
+		// Set Alignment
+		$('.alignment').text(setAlignment());
 	};
 
 	fillBlock();
