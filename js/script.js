@@ -22,6 +22,7 @@ $(function () {
 		languages: [],
 		wealth: '',
 		treasure: 0,
+		hierarchy: '',
 		attributes: {
 			str: 0,
 			dex: 0,
@@ -107,6 +108,55 @@ $(function () {
 		lc: ['Lawful', 'Neutral', 'Chaotic']
 	};
 
+	var hierarchyReferences = [
+		'UpperCity',
+		'LowerCity',
+		'OuterCity'
+	];
+	var hierarchy = {
+		'UpperCity': {
+			0: {
+				ratio: 10,
+				name: 'Owner'
+			},
+			1: {
+				ratio: 70,
+				name: 'Seller'
+			},
+			2: {
+				ratio: 100,
+				name: 'Shipper'
+			}
+		},
+		'LowerCity': {
+			0: {
+				ratio: 45,
+				name: 'Owner'
+			},
+			1: {
+				ratio: 65,
+				name: 'Seller'
+			},
+			2: {
+				ratio: 100,
+				name: 'Shipper'
+			}
+		},
+		'OuterCity': {
+			0: {
+				ratio: 75,
+				name: 'Owner'
+			},
+			1: {
+				ratio: 85,
+				name: 'Seller'
+			},
+			2: {
+				ratio: 100,
+				name: 'Shipper'
+			}
+		}
+	};
 
 
 	/**
@@ -335,6 +385,10 @@ $(function () {
 		return languages;
 	};
 
+	/**
+	 * Set npc alignment
+	 * @return {string} return the npc alignment
+	 */
 	var setAlignment = function() {
 		var align = '',
 			choosen,
@@ -378,6 +432,39 @@ $(function () {
 
 		return align;
 	};
+
+	/**
+	 * Set npc hierarchy
+	 * @return {string} return the npc hierarchy in the shop
+	 */
+	var setHierarchy = function() {
+		var title;
+
+		var hierarchyRoll = roll(1, 100, 0);
+
+		// Get reference string
+		var referenceStr = hierarchyReferences[roll(0, hierarchyReferences.length, 0)];
+
+		// Get neighbourhood properties
+		var neighbourhood = hierarchy[referenceStr];
+
+		// Get title
+		var index = 0,
+				length = Object.keys(neighbourhood).length,
+				title;
+		for(index; index < length; index++) {
+
+			if (hierarchyRoll <= neighbourhood[index].ratio) {
+
+				title = neighbourhood[index].name;
+				break;
+			}
+		}
+
+		console.log(referenceStr, title);
+		npc.hierarchy = title;
+		return title;
+	}
 
 	npc.gender = setGender();
 	npc.race = setRace();
@@ -438,6 +525,10 @@ $(function () {
 
 		// Set Alignment
 		$('.alignment').text(setAlignment());
+
+		// Set hierarchy level
+		var descr = $('.description').text();
+		$('.description').text(descr + ', '+ setHierarchy());
 	};
 
 	fillBlock();
