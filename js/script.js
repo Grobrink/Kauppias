@@ -39,16 +39,16 @@ $(function () {
 
 	var races = {
 		0: {
-			ratio: 82,
+			ratio: 70,
 			name: 'Human'
 		},
 		1: {
-			ratio: 91,
+			ratio: 85,
 			name: 'Dwarf',
 			language: 'Dwarfish'
 		},
 		2: {
-			ratio: 96,
+			ratio: 93,
 			name: 'Halfling',
 			language: 'Halfling'
 		},
