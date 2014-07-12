@@ -437,7 +437,7 @@ $(function () {
 			for(indexLanguage; indexLanguage < lengthLanguage; indexLanguage++) {
 
 				currentLanguage = languages[indexLanguage];
-				if (currentLanguageRoll <= currentLanguage.ratio) {
+				if (currentLanguageRoll <= currentLanguage.ratio && languageList.indexOf(currentLanguage.name) == -1) {
 					result = currentLanguage.name;
 					break;
 				}
