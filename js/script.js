@@ -111,33 +111,46 @@ $(function () {
 	var hierarchyReferences = [
 		'UpperCity',
 		'LowerCity',
-		'OuterCity'
+		'OuterCity',
+		'Street'
 	];
 	var hierarchy = {
 		'UpperCity': {
 			0: {
 				ratio: 10,
-				name: 'Owner'
+				name: 'Master'
 			},
 			1: {
+				ratio: 40,
+				name: 'Companion'
+			},
+			2: {
+				ratio: 60,
+				name: 'Novice'
+			},
+			3: {
 				ratio: 70,
 				name: 'Seller'
 			},
-			2: {
+			4: {
 				ratio: 100,
 				name: 'Shipper'
 			}
 		},
 		'LowerCity': {
 			0: {
-				ratio: 45,
-				name: 'Owner'
+				ratio: 20,
+				name: 'Master'
 			},
 			1: {
-				ratio: 65,
-				name: 'Seller'
+				ratio: 60,
+				name: 'Companion'
 			},
 			2: {
+				ratio: 80,
+				name: 'Novice'
+			},
+			3: {
 				ratio: 100,
 				name: 'Shipper'
 			}
@@ -154,6 +167,12 @@ $(function () {
 			2: {
 				ratio: 100,
 				name: 'Shipper'
+			}
+		},
+		'Street': {
+			0: {
+				ratio: 100,
+				name: 'Seller'
 			}
 		}
 	};
