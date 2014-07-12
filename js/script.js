@@ -36,6 +36,25 @@ $(function () {
 		}
 	};
 
+	var races = {
+		0: {
+			ratio: 82,
+			name: 'Human'
+		},
+		1: {
+			ratio: 91,
+			name: 'Dwarf'
+		},
+		2: {
+			ratio: 96,
+			name: 'Halfling'
+		},
+		3: {
+			ratio: 100,
+			name: 'Elf'
+		}
+	};
+
 	var nameList = {
 		Human: {
 			subraces: {
@@ -114,6 +133,7 @@ $(function () {
 		'OuterCity',
 		'Street'
 	];
+
 	var hierarchy = {
 		'UpperCity': {
 			0: {
@@ -249,20 +269,18 @@ $(function () {
 	var setRace = function() {
 		var race = '';
 
-		var raceRoll = roll(1, 100, 0);
+		var index = 0,
+			length = Object.keys(races).length,
+			raceRoll2 = roll(1, 100, 0),
+			currentRace;
+		for(index; index < length; index++) {
 
-		if (raceRoll <= 82) {
-			race = 'Human';
-		}
-		else if (raceRoll <= 91) {
-			race = 'Dwarf';
-		}
+			currentRace = races[index];
+			if (raceRoll2 <= currentRace.ratio) {
+				race = currentRace.name;
+				break;
+			}
 
-		else if (raceRoll <= 96) {
-			race = 'Halfling';
-		}
-		else {
-			race = 'Elf';
 		}
 
 		setSubrace(race);
