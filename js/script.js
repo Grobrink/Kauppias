@@ -19,6 +19,7 @@ $(function () {
 		alignment: '',
 		race: '',
 		subrace: '',
+		mainLanguage: '',
 		languages: [],
 		wealth: '',
 		treasure: 0,
@@ -43,15 +44,45 @@ $(function () {
 		},
 		1: {
 			ratio: 91,
-			name: 'Dwarf'
+			name: 'Dwarf',
+			language: 'Dwarfish'
 		},
 		2: {
 			ratio: 96,
-			name: 'Halfling'
+			name: 'Halfling',
+			language: 'Halfling'
 		},
 		3: {
 			ratio: 100,
-			name: 'Elf'
+			name: 'Elf',
+			language: 'Elvish'
+		}
+	};
+
+	var languages = {
+		0: {
+			ratio: 35,
+			name: 'Dwarvish'
+		},
+		1: {
+			ratio: 60,
+			name: 'Halfling'
+		},
+		2: {
+			ratio: 75,
+			name: 'Elvish'
+		},
+		3: {
+			ratio: 85,
+			name: 'Gnomish'
+		},
+		4: {
+			ratio: 90,
+			name: 'Orc'
+		},
+		5: {
+			ratio: 100,
+			name: 'Goblin'
 		}
 	};
 
@@ -283,6 +314,7 @@ $(function () {
 
 		}
 
+		npc.mainLanguage = currentRace.language;
 		setSubrace(race);
 
 		return race;
@@ -384,42 +416,40 @@ $(function () {
 	 */
 	var setLanguages = function() {
 
-		var languages = 'Common';
+		var languageList = 'Common',
+			lengthLanguage = Object.keys(languages).length;
+
+		if (npc.race != 'Human') {
+			languageList += ', ' + npc.mainLanguage;
+		}
 
 		var index = 0,
-				length = parseInt(getAttributeModifier(npc.attributes.int)),
-				languageRoll,
-				result = '';
+			length = parseInt(getAttributeModifier(npc.attributes.int)),
+			languageRoll,
+			result = '';
 		for(index; index < length; index++) {
 			languageRoll = roll(0, 100, 0);
 			result = '';
 
-			if (languageRoll <= 35 && languages.indexOf('Halfling') == -1) {
-					result = 'Halfling';
-			}
-			else if (languageRoll <= 60 && languages.indexOf('Dwarvish') == -1) {
-					result = 'Dwarvish';
-			}
-			else if (languageRoll <= 75 && languages.indexOf('Elvish') == -1) {
-					result = 'Elvish';
-			}
-			else if (languageRoll <= 85 && languages.indexOf('Gnomish') == -1) {
-					result = 'Gnomish';
-			}
-			else if (languageRoll <= 90 && languages.indexOf('Goblin') == -1) {
-					result = 'Goblin';
-			}
-			else if (languageRoll <= 100 && languages.indexOf('Orc') == -1) {
-					result = 'Orc';
+			var indexLanguage = 0,
+				currentLanguageRoll = roll(0, 100, 0),
+				currentLanguage;
+			for(indexLanguage; indexLanguage < lengthLanguage; indexLanguage++) {
+
+				currentLanguage = languages[indexLanguage];
+				if (currentLanguageRoll <= currentLanguage.ratio) {
+					result = currentLanguage.name;
+					break;
+				}
 			}
 
 			if (result != '') {
 				npc.languages.push(result)
-				languages += ', ' + result;
+				languageList += ', ' + result;
 			}
 		}
 
-		return languages;
+		return languageList;
 	};
 
 	/**
@@ -475,9 +505,8 @@ $(function () {
 	 * @return {string} return the npc hierarchy in the shop
 	 */
 	var setHierarchy = function() {
-		var title;
-
-		var hierarchyRoll = roll(1, 100, 0);
+		var title,
+			hierarchyRoll = roll(1, 100, 0);
 
 		// Get reference string
 		var referenceStr = hierarchyReferences[roll(0, hierarchyReferences.length, 0)];
@@ -487,9 +516,9 @@ $(function () {
 
 		// Get title
 		var index = 0,
-				length = Object.keys(neighbourhood).length,
-				title,
-				currentNeighbourhood;
+			length = Object.keys(neighbourhood).length,
+			title,
+			currentNeighbourhood;
 		for(index; index < length; index++) {
 
 			currentNeighbourhood = neighbourhood[index];
