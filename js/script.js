@@ -488,17 +488,18 @@ $(function () {
 		// Get title
 		var index = 0,
 				length = Object.keys(neighbourhood).length,
-				title;
+				title,
+				currentNeighbourhood;
 		for(index; index < length; index++) {
 
-			if (hierarchyRoll <= neighbourhood[index].ratio) {
+			currentNeighbourhood = neighbourhood[index];
+			if (hierarchyRoll <= currentNeighbourhood.ratio) {
 
-				title = neighbourhood[index].name;
+				title = currentNeighbourhood.name;
 				break;
 			}
 		}
 
-		console.log(referenceStr, title);
 		npc.hierarchy = title;
 		return title;
 	}
